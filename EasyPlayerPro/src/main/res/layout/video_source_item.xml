@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/video_source_item_thumb"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/dev_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dev_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="设备名称:"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/dev_reg_tv"
+                app:layout_constraintLeft_toRightOf="@+id/video_source_item_thumb"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/dev_name_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:maxLength="20"
+                android:visibility="gone"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/dev_name_tv"
+                app:layout_constraintLeft_toRightOf="@+id/dev_name_tv"
+                app:layout_constraintTop_toTopOf="@+id/dev_name_tv" />
+
+            <TextView
+                android:id="@+id/dev_reg_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="注册码:"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/add_time_tv"
+                app:layout_constraintLeft_toRightOf="@+id/video_source_item_thumb"
+                app:layout_constraintTop_toBottomOf="@+id/dev_name_tv" />
+
+            <TextView
+                android:id="@+id/dev_reg_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="20"
+                android:visibility="gone"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/dev_reg_tv"
+                app:layout_constraintLeft_toLeftOf="@+id/dev_name_value_tv"
+                app:layout_constraintTop_toTopOf="@+id/dev_reg_tv" />
+
+
+            <TextView
+                android:id="@+id/add_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/dev_reg_tv"
+                app:layout_constraintTop_toBottomOf="@+id/dev_reg_tv" />
+
+
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</layout>

@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+def configs = rootProject.ext.android
+android {
+    compileSdkVersion configs.compileSdkVersion
+    signingConfigs {
+        config {
+            keyAlias 'dwh'
+            keyPassword 'dwh2016'
+            storeFile file('push.jks')
+            storePassword 'dwh2016'
+        }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    defaultConfig {
+        applicationId "org.chuangchi.player"
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode configs.versionCode
+        versionName configs.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        if (project.hasProperty('PLAYER_KEY')) {
+            buildConfigField 'String', 'PLAYER_KEY', PLAYER_KEY
+        } else {
+            println("NO RTMPKEY FOUND")
+            buildConfigField 'String', 'PLAYER_KEY', "\"EasyPlayer is free!\""
+        }
+
+        ndk {
+            //设置支持的SO库架构
+//            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'x86', 'armeabi-v7a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+
+
+
+    dataBinding {
+        enabled = true
+    }
+
+
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "YBQZB-${variant.versionCode}-${variant.versionName}.apk"
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.budiyev.android:code-scanner:1.9.4'
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    implementation project(':ijkplayer-java')
+    implementation project(path: ':module_Base')
+    implementation project(path: ':RegMode')
+    implementation project(path: ':base_net_lib')
+}

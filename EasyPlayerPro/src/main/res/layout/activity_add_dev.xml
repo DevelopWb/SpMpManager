@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/dev_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="请输入设备名称"
+                android:paddingRight="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/new_media_source_ip_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="请输入IP地址"
+                android:paddingRight="25dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/dev_name_et" />
+
+            <EditText
+                android:id="@+id/new_media_reg_code_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="8dp"
+                android:hint="请输入注册码"
+                android:paddingRight="25dp"
+                app:layout_constraintTop_toBottomOf="@+id/new_media_source_ip_et" />
+
+            <RadioGroup
+                android:id="@+id/url_type_rg"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_white_only_bottom_gray_shape_1px"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/new_media_reg_code_et">
+
+                <RadioButton
+                    android:id="@+id/rtsp_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:checked="true"
+                    android:layout_height="wrap_content"
+                    android:text="智能取证S"></RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rtmp_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content"
+                    android:text="智能取证M"></RadioButton>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/save_device_tv"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bt_selecter_default_green"
+                android:gravity="center"
+                android:letterSpacing="0.8"
+                android:text="保存"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/cancel_tv"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/url_type_rg" />
+
+            <TextView
+                android:id="@+id/cancel_tv"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintTop_toTopOf="@+id/save_device_tv"
+                app:layout_constraintBottom_toBottomOf="@+id/save_device_tv"
+                android:background="@drawable/bt_selecter_default_green"
+                android:gravity="center"
+                android:letterSpacing="0.8"
+                android:text="取消"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/save_device_tv"
+                app:layout_constraintTop_toBottomOf="@+id/new_media_reg_code_et" />
+        </android.support.constraint.ConstraintLayout>
+
+
+    </LinearLayout>
+</layout>

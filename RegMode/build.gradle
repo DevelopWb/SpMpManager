@@ -1,0 +1,13 @@
+apply plugin: 'com.android.library'
+
+def configs = rootProject.ext.android
+android {
+    compileSdkVersion configs.compileSdkVersion
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 此处一定要注意使用RxJava2的版本
+    implementation project(path: ':base_net_lib')
+    implementation project(path: ':module_Base')
+}
