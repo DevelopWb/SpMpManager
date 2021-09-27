@@ -10,10 +10,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.juntai.wisdom.basecomponent.base.BaseMvpActivity;
+import com.regmode.RegLatestContact;
+import com.regmode.Utils.RegOperateManager;
 
 import org.easydarwin.easyplayer.AddAdressActivity;
 import org.easydarwin.easyplayer.BuildConfig;
-import org.easydarwin.easyplayer.ProVideoActivity;
 import org.easydarwin.easyplayer.R;
 import org.easydarwin.easyplayer.base.customview.CustomViewPager;
 import org.easydarwin.easyplayer.base.customview.MainPagerAdapter;
@@ -30,8 +31,9 @@ public class MainActivity extends BaseMvpActivity<MainPagePresent> implements Vi
     private CustomViewPager mainViewpager;
 
     private TabLayout mainTablayout;
-    private String[] title = new String[]{"聊天", "通讯录", "我的"};
-    private int[] tabDrawables = new int[]{R.drawable.home_index, R.drawable.home_index, R.drawable.home_msg};
+    private String[] title = new String[]{"设备列表", "记录", "设置"};
+    private int[] tabDrawables = new int[]{R.drawable.home_dev_list_index, R.drawable.home_record_index,
+            R.drawable.home_set_index};
     private SparseArray<Fragment> mFragments = new SparseArray<>();
     private HomePageFragment mHomePageFg;
     //
@@ -52,7 +54,7 @@ public class MainActivity extends BaseMvpActivity<MainPagePresent> implements Vi
 
         initTab();
         initLeftBackTv(false);
-        setTitleName("聊天");
+        setTitleName("设备列表");
         setRightTvDrawable(R.drawable.new_fast_white);
         mImmersionBar.reset().statusBarDarkFont(false).statusBarColor(R.color.colorAccent).init();
         getTitleRightTv().setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,17 @@ public class MainActivity extends BaseMvpActivity<MainPagePresent> implements Vi
                 //添加dev
                 startActivityForResult(new Intent(mContext, AddAdressActivity.class),
                         AddAdressActivity.REQUEST_ADD_DEVICE);
+
+            }
+        });
+        RegOperateManager.getInstance(mContext).setCancelCallBack(new RegLatestContact.CancelCallBack() {
+            @Override
+            public void toFinishActivity() {
+                finish();
+            }
+
+            @Override
+            public void toDoNext() {
 
             }
         });
@@ -129,7 +142,7 @@ public class MainActivity extends BaseMvpActivity<MainPagePresent> implements Vi
         switch (i) {
             case 0:
                 setRightTvDrawable(R.drawable.new_fast_white);
-                setTitleName("聊天");
+                setTitleName("设备列表");
                 break;
             case 1:
                 setTitleName("文件");

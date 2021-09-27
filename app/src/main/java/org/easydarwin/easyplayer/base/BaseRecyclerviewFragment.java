@@ -34,7 +34,7 @@ public abstract class BaseRecyclerviewFragment<P extends IPresenter> extends Bas
         mRecyclerview = (RecyclerView) getView(R.id.recyclerview);
         mSmartrefreshlayout = (SmartRefreshLayout) getView(R.id.smartrefreshlayout);
         adapter = getAdapter();
-        adapter.setEmptyView(getBaseActivity().getAdapterEmptyView("一条数据也没有...",-1));
+//        adapter.setEmptyView(getBaseActivity().getAdapterEmptyView("一条数据也没有...",-1));
         getBaseActivity().initRecyclerview(mRecyclerview,adapter, LinearLayoutManager.VERTICAL);
         mSmartrefreshlayout.setEnableLoadMore(false);
         mSmartrefreshlayout.setEnableRefresh(false);

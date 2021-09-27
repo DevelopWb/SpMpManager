@@ -26,7 +26,7 @@ public class FileRecordFragment extends BaseMvpFragment<MainPagePresent> impleme
         View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private String[] title = new String[]{"聊天", "通讯录"};
-    private int[] tabDrawables = new int[]{R.drawable.home_index, R.drawable.home_index};
+    private int[] tabDrawables = new int[]{R.drawable.home_dev_list_index, R.drawable.home_dev_list_index};
     private SparseArray<Fragment> mFragments = new SparseArray<>();
     private TabLayout mFileTablayout;
     private CustomViewPager mFileViewpager;
@@ -83,7 +83,6 @@ public class FileRecordFragment extends BaseMvpFragment<MainPagePresent> impleme
         mFragments.append(0, LocalFileFragment.newInstance(false));//
         mFragments.append(1, LocalFileFragment.newInstance(true));//
         //
-        mFileViewpager.setOffscreenPageLimit(2);
         adapter = new MainPagerAdapter(getChildFragmentManager(),mContext, title, tabDrawables,
                 mFragments);
         mFileViewpager.setAdapter(adapter);

@@ -53,10 +53,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
      * @return
      */
     public View getTabView(int position) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.custom_tabitem, null);
-        ImageView img = v.findViewById(R.id.tabitem_image);
-        img.setVisibility(View.GONE);
-        img.setImageResource(images[position]);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.custom_tabitem2, null);
         TextView title = v.findViewById(R.id.tabitem_text);
         title.setText(titles[position]);
         title.setTextSize(14);

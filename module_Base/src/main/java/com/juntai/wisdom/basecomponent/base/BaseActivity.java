@@ -421,7 +421,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Toolba
      */
     public void initRecyclerview(RecyclerView recyclerView, BaseQuickAdapter baseQuickAdapter, @RecyclerView.Orientation int orientation) {
         LinearLayoutManager managere = new LinearLayoutManager(this, orientation, false);
-        baseQuickAdapter.setEmptyView(getAdapterEmptyView("一条信息也没有", R.drawable.none_publish));
+        baseQuickAdapter.setEmptyView(getAdapterEmptyView("一条数据也没有", -1));
         recyclerView.setLayoutManager(managere);
         recyclerView.setAdapter(baseQuickAdapter);
     }
