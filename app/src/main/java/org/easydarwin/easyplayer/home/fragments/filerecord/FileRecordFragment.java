@@ -25,12 +25,13 @@ import org.easydarwin.easyplayer.home.MainPagePresent;
 public class FileRecordFragment extends BaseMvpFragment<MainPagePresent> implements MainPageContract.IMainPageView,
         View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    private String[] title = new String[]{"聊天", "通讯录"};
+    private String[] title = new String[]{"抓拍", "录像"};
     private int[] tabDrawables = new int[]{R.drawable.home_dev_list_index, R.drawable.home_dev_list_index};
     private SparseArray<Fragment> mFragments = new SparseArray<>();
     private TabLayout mFileTablayout;
     private CustomViewPager mFileViewpager;
     private MainPagerAdapter adapter;
+    private LocalFileFragment picFragment;
 
     @Override
     public void onDestroy() {
@@ -45,6 +46,7 @@ public class FileRecordFragment extends BaseMvpFragment<MainPagePresent> impleme
 
     @Override
     protected void lazyLoad() {
+        picFragment.lazyLoad();
     }
 
     @Override
@@ -80,7 +82,8 @@ public class FileRecordFragment extends BaseMvpFragment<MainPagePresent> impleme
         initTab();
     }
     public void initTab() {
-        mFragments.append(0, LocalFileFragment.newInstance(false));//
+        picFragment = LocalFileFragment.newInstance(false);
+        mFragments.append(0, picFragment);//
         mFragments.append(1, LocalFileFragment.newInstance(true));//
         //
         adapter = new MainPagerAdapter(getChildFragmentManager(),mContext, title, tabDrawables,

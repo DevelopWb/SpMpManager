@@ -52,6 +52,8 @@ public class MyCenterFragment extends BaseMvpFragment<MainPagePresent> implement
 
     @Override
     protected void lazyLoad() {
+        mRegistCodeValue.setText(Hawk.get(HawkProperty.REG_CODE));
+        mPushServerIpEt.setText(HawkUtils.getIP());
     }
 
     @Override
@@ -80,11 +82,11 @@ public class MyCenterFragment extends BaseMvpFragment<MainPagePresent> implement
     protected void initView() {
 
         mRegistCodeValue = (TextView) getView(R.id.regist_code_value);
-        mRegistCodeValue.setText(Hawk.get(HawkProperty.REG_CODE));
+
         mPushServerIpEt = (EditText) getView(R.id.push_server_ip_et);
         mUdpSwitch = (Switch) getView(R.id.udp_switch);
         mCodecSwitch = (Switch) getView(R.id.codec_switch);
-        mPushServerIpEt.setText(HawkUtils.getIP());
+
         mUdpSwitch.setChecked(SPUtil.getUDPMode(mContext));
         mCodecSwitch.setChecked(SPUtil.getMediaCodec(mContext));
 

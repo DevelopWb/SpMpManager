@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,21 +22,25 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.juntai.wisdom.basecomponent.mvp.IPresenter;
 
 import org.easydarwin.easyplayer.ProVideoActivity;
 import org.easydarwin.easyplayer.R;
-import org.easydarwin.easyplayer.databinding.FragmentMediaFileBinding;
+import org.easydarwin.easyplayer.base.BaseAppFragment;
 import org.easydarwin.easyplayer.databinding.ImagePickerItemBinding;
 import org.easydarwin.easyplayer.util.FileUtil;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.Collections;
 
-public class LocalFileFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class LocalFileFragment extends BaseAppFragment implements CompoundButton.OnCheckedChangeListener,
+        View.OnClickListener {
     public static final String KEY_IS_RECORD = "key_last_selection";
 
     private boolean mShowMp4File;
-    private FragmentMediaFileBinding mBinding;
 
     SparseArray<Boolean> mImageChecked;
 
@@ -45,6 +48,10 @@ public class LocalFileFragment extends Fragment implements CompoundButton.OnChec
     File mRoot = null;
     File[] mSubFiles;
     int mImgHeight;
+    private RecyclerView mRecycler;
+    private RecyclerView.Adapter adapter;
+    //    private FileAdapter adapter;
+
     public static LocalFileFragment newInstance(boolean isVideo) {
         Bundle args = new Bundle();
         args.putBoolean(KEY_IS_RECORD, isVideo);
@@ -52,9 +59,14 @@ public class LocalFileFragment extends Fragment implements CompoundButton.OnChec
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutRes() {
+        return R.layout.fragment_media_file;
+    }
+
+    @Override
+    protected void initView() {
         setHasOptionsMenu(false);
 
         mImageChecked = new SparseArray<>();
@@ -68,39 +80,29 @@ public class LocalFileFragment extends Fragment implements CompoundButton.OnChec
             mRoot = new File(FileUtil.getPicturePath());
         }
 
-        File[] subFiles = mRoot.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String filename) {
-                return filename.endsWith(mSuffix);
-            }
-        });
-
-        if (subFiles == null)
-            subFiles = new File[0];
-
-        mSubFiles = subFiles;
+        getData();
         mImgHeight = (int) (getResources().getDisplayMetrics().density * 100 + 0.5f);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_media_file, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+        mRecycler = (RecyclerView) getView(R.id.recycler);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mBinding.recycler.setLayoutManager(layoutManager);
+        mRecycler.setLayoutManager(layoutManager);
+        //        adapter = new FileAdapter(R.layout.image_picker_item);
+        //        mRecycler.setAdapter(adapter);
+        //
+        //        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        //            @Override
+        //            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        //
+        //            }
+        //        });
+        adapter = new RecyclerView.Adapter() {
 
-        mBinding.recycler.setAdapter(new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                ImagePickerItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.image_picker_item, parent, false);
+                ImagePickerItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                        R.layout.image_picker_item, parent, false);
                 return new ImageItemHolder(binding);
             }
 
@@ -126,14 +128,45 @@ public class LocalFileFragment extends Fragment implements CompoundButton.OnChec
             public int getItemCount() {
                 return mSubFiles.length;
             }
-        });
+        };
+        mRecycler.setAdapter(adapter);
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//        ImageItemHolder holder = (ImageItemHolder) buttonView.getTag(R.id.click_tag);
-//        int position = holder.getAdapterPosition();
+    protected void initData() {
+
     }
+
+
+    private void getData() {
+        File[] subFiles = mRoot.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                return filename.endsWith(mSuffix);
+            }
+        });
+
+        if (subFiles == null) {
+            subFiles = new File[0];
+        }
+        Collections.reverse(Arrays.asList(subFiles));
+        mSubFiles = subFiles;
+    }
+
+    @Override
+    protected IPresenter createPresenter() {
+        return null;
+    }
+
+
+    @Override
+    protected void lazyLoad() {
+        getData();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -173,16 +206,32 @@ public class LocalFileFragment extends Fragment implements CompoundButton.OnChec
                 i.putExtra("videoPath", path);
                 startActivity(i);
 
-//                Intent intent = new Intent();
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                intent.setAction(Intent.ACTION_VIEW);
-//                intent.setDataAndType(uri, "video/*");
-//                startActivity(intent);
+                //                Intent intent = new Intent();
+                //                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                //                intent.setAction(Intent.ACTION_VIEW);
+                //                intent.setDataAndType(uri, "video/*");
+                //                startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    @Override
+    public void onSuccess(String tag, Object o) {
+
+    }
+
+    @Override
+    public void onError(String tag, Object o) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+    }
+
 
     class ImageItemHolder extends RecyclerView.ViewHolder {
         public final CheckBox mCheckBox;

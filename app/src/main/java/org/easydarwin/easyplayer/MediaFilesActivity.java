@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.easydarwin.easyplayer.databinding.ActivityMediaFilesBinding;
-import org.easydarwin.easyplayer.fragments.LocalFileFragment;
+import org.easydarwin.easyplayer.home.fragments.filerecord.LocalFileFragment;
 
 /**
  * 录像和截图
@@ -52,6 +52,7 @@ public class MediaFilesActivity extends AppCompatActivity {
                 return 2;
             }
 
+            @Override
             public Fragment getItem(int position) {
                 Bundle args = new Bundle();
                 args.putBoolean(LocalFileFragment.KEY_IS_RECORD, position == 1);
