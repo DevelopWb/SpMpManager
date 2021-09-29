@@ -118,7 +118,7 @@ public class AddAdressActivity extends BaseAppActivity implements View.OnClickLi
 
     @Override
     public void initView() {
-        setTitleName("添加设备");
+        setTitleName("设备添加");
         mDevNameEt = (EditText) findViewById(R.id.dev_name_et);
         mSaveDeviceTv = (TextView) findViewById(R.id.save_device_tv);
         mNewMediaSourceIpEt = (EditText) findViewById(R.id.new_media_source_ip_et);

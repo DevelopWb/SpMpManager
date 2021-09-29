@@ -1,7 +1,9 @@
 package org.easydarwin.easyplayer.home.fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -46,6 +48,24 @@ public class HomePageFragment extends BaseRecyclerviewFragment<MainPagePresent> 
                 Intent i = new Intent(mContext, ProVideoActivity.class);
                 i.putExtra("videoPath", videoAddrBean.getUrl());
                 startActivity(i);
+            }
+        });
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                new AlertDialog
+                        .Builder(mContext)
+                        .setMessage("确定要删除该设备吗？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                adapter.remove(position);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+
+                return false;
             }
         });
     }

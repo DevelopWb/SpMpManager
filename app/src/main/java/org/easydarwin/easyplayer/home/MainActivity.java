@@ -145,7 +145,7 @@ public class MainActivity extends BaseMvpActivity<MainPagePresent> implements Vi
                 setTitleName("设备列表");
                 break;
             case 1:
-                setTitleName("文件");
+                setTitleName("记录");
                 getTitleRightTv().setVisibility(View.GONE);
                 break;
             case 2:
